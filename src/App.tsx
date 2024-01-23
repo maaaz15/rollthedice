@@ -34,43 +34,79 @@ const Dice = ({imageUrl}: DiceProps): React.JSX.Element => {
 }
 
 function App(): React.JSX.Element {
-  const [image, setImage] = useState<ImageSourcePropType>(DiceOne)
+  const [diceOneImage, setDiceOneImage] = useState<ImageSourcePropType>(DiceOne)
+  const [diceTwoImage, setDiceTwoImage] = useState<ImageSourcePropType>(DiceOne)
 
-  const rollDice = () => {
+  const rollDiceOne = () => {
     let randomNum = Math.floor(Math.random() * 6) + 1
     console.log(randomNum);
 
     switch (randomNum) {
       case 1:
-        setImage(DiceOne)
+        setDiceOneImage(DiceOne)
         break;
       case 2:
-        setImage(DiceTwo)
+        setDiceOneImage(DiceTwo)
         break;
       case 3:
-        setImage(DiceThree)
+        setDiceOneImage(DiceThree)
         break;
       case 4:
-        setImage(DiceFour)
+        setDiceOneImage(DiceFour)
         break;
       case 5:
-        setImage(DiceFive)
+        setDiceOneImage(DiceFive)
         break;
       case 6:
-        setImage(DiceSix)
+        setDiceOneImage(DiceSix)
         break;
       default:
         break;
     }
     ReactNativeHapticFeedback.trigger("impactLight", options);
   }
+  const rollDiceTwo = () => {
+    let randomNum = Math.floor(Math.random() * 6) + 1
+    console.log(randomNum);
+
+    switch (randomNum) {
+      case 1:
+        setDiceTwoImage(DiceOne)
+        break;
+      case 2:
+        setDiceTwoImage(DiceTwo)
+        break;
+      case 3:
+        setDiceTwoImage(DiceThree)
+        break;
+      case 4:
+        setDiceTwoImage(DiceFour)
+        break;
+      case 5:
+        setDiceTwoImage(DiceFive)
+        break;
+      case 6:
+        setDiceTwoImage(DiceSix)
+        break;
+      default:
+        break;
+    }
+    ReactNativeHapticFeedback.trigger("impactLight", options);
+  }
+  const rollthedice = () => {
+    rollDiceOne();
+    rollDiceTwo();
+  }
 
   return (
     <View style={styles.container}>
-      <Dice imageUrl={image}/>
+      <View style={styles.diceContainer}>
+      <Dice imageUrl={diceOneImage}/>
+      <Dice imageUrl={diceTwoImage}/>
+      </View>
       <Pressable
       style={styles.rollDiceButton}
-      onPress={rollDice}
+      onPress={() => rollthedice()}
       >
         <Text style={styles.rollDiceBtnText}>Roll the dice</Text>
       </Pressable>
@@ -86,11 +122,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff2f2'
   },
   diceContainer: {
-    margin: 12,
+    flexDirection: 'row',
+    margin: 10,
   },
   diceImage: {
-    width: 200,
-    height: 200
+    width: 100,
+    height: 100,
+    marginHorizontal: 10
   },
   rollDiceButton: {
     width: 180,
